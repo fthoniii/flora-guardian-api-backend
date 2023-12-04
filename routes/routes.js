@@ -12,7 +12,7 @@ const multer = Multer({
 const connection = mysql.createConnection({
     host: '34.101.166.52',
     user: 'root',
-    database: 'floraguardian',
+    database: 'floraguardian_db',
     password: '123456'
 })
 
@@ -81,7 +81,7 @@ router.post("/plant", multer.single('attachment'), imgUpload.uploadToGcs, (req, 
         imageUrl = req.file.cloudStoragePublicUrl
     }
 
-    const query = "INSERT INTO records (name, scientificName, description, wateringTime, attachment) values (?, ?, ?, ?, ?)"
+    const query = "INSERT INTO plant (name, scientificName, description, wateringTime, attachment) values (?, ?, ?, ?, ?)"
 
     connection.query(query, [name, scientificName, description, wateringTime, imageUrl], (err, rows, fields) => {
         if (err) {
