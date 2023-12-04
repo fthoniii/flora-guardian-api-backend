@@ -81,7 +81,7 @@ router.post("/plant", multer.single('attachment'), imgUpload.uploadToGcs, (req, 
         imageUrl = req.file.cloudStoragePublicUrl
     }
 
-    const query = "INSERT INTO records (name, scientificName, description, wateringTime, attachment) values (?, ?, ?, ?, ?)"
+    const query = "INSERT INTO plant (name, scientificName, description, wateringTime, attachment) values (?, ?, ?, ?, ?)"
 
     connection.query(query, [name, scientificName, description, wateringTime, imageUrl], (err, rows, fields) => {
         if (err) {
