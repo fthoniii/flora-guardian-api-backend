@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 })
 
 // ---Ambil semua data plant---
-router.get("/plant", (req, res) => {
+router.get("/getallplant", (req, res) => {
     const query = "SELECT * FROM plant"
     connection.query(query, (err, rows, field) => {
         if(err) {
