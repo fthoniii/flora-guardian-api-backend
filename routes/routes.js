@@ -29,7 +29,7 @@ router.get("/plant", (req, res) => {
 })
 
 // Ambil 10 tanaman, terakhir yang ditambahkan
-router.get("/plant", (req, res) => {
+router.get("/get10plant", (req, res) => {
     const query = "SELECT * FROM plant ORDER BY id DESC LIMIT 10"
     connection.query(query, (err, rows, field) => {
         if(err) {
@@ -41,7 +41,7 @@ router.get("/plant", (req, res) => {
 })
 
 // ---Ambil tanaman berdasarkan id---
-router.get("/plant/:id", (req, res) => {
+router.get("/getplantbyid/:id", (req, res) => {
     const id = req.params.id
 
     const query = "SELECT * FROM plant WHERE id = ?"
@@ -70,7 +70,7 @@ router.get("/plant/:id", (req, res) => {
 // })
 
 // ---Masukan data tanaman---
-router.post("/plant", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
+router.post("/postplant", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
     const name = req.body.name
     const scientificName = req.body.scientificName
     const description = req.body.description
@@ -93,7 +93,7 @@ router.post("/plant", multer.single('attachment'), imgUpload.uploadToGcs, (req, 
 })
 
 // ---Ubah data tanaman---
-router.put("/plant/:id", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
+router.put("/updateplant/:id", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
     const id = req.params.id
     const name = req.body.name
     const scientificName = req.body.scientificName
@@ -117,7 +117,7 @@ router.put("/plant/:id", multer.single('attachment'), imgUpload.uploadToGcs, (re
 })
 
 // ---Hapus data tanaman---
-router.delete("/plant/:id", (req, res) => {
+router.delete("/deleteplant/:id", (req, res) => {
     const id = req.params.id
     
     const query = "DELETE FROM plant WHERE id = ?"
