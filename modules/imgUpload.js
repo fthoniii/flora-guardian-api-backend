@@ -6,13 +6,11 @@ const path = require('path');
 
 const pathKey = path.resolve('./serviceaccountkey.json')
 
-// TODO: Sesuaikan konfigurasi Storage
 const gcs = new Storage({
     projectId: 'capstonebangkit-floraguardian',
     keyFilename: pathKey
 })
 
-// TODO: Tambahkan nama bucket yang digunakan
 const bucketName = 'floraguard'
 const bucket = gcs.bucket(bucketName)
 
