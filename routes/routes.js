@@ -55,11 +55,11 @@ router.get("/getplantbyid/:id", (req, res) => {
 })
 
 // Fungsi belum beres
-// router.get("/plant", (req, res) => {
+// router.get("/searchplant", (req, res) => {
 //     const s = req.query.s;
 
 //     console.log(s)
-//     const query = "SELECT * FROM plant WHERE name LIKE '%" + s + "%' or scientificName LIKE '%" + s + "%'"
+//     const query = "SELECT * FROM plant WHERE plantSpecies LIKE '%" + s + "%' or description LIKE '%" + s + "%'"
 //     connection.query(query, (err, rows, field) => {
 //         if(err) {
 //             res.status(500).send({message: err.sqlMessage})
@@ -71,19 +71,19 @@ router.get("/getplantbyid/:id", (req, res) => {
 
 // ---Masukan data tanaman---
 router.post("/postplant", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
-    const name = req.body.name
-    const scientificName = req.body.scientificName
+    const plantSpecies = req.body.plantSpecies
     const description = req.body.description
-    const wateringTime = req.body.wateringTime
+    const wateringFrequence = req.body.wateringFrequence
+    const waterLevel = req.body.waterLevel
     var imageUrl = ''
 
     if (req.file && req.file.cloudStoragePublicUrl) {
         imageUrl = req.file.cloudStoragePublicUrl
     }
 
-    const query = "INSERT INTO plant (name, scientificName, description, wateringTime, attachment) values (?, ?, ?, ?, ?)"
+    const query = "INSERT INTO plant (plantSpecies, description, wateringFrequence, waterLevel, attachment) values (?, ?, ?, ?, ?)"
 
-    connection.query(query, [name, scientificName, description, wateringTime, imageUrl], (err, rows, fields) => {
+    connection.query(query, [plantSpecies, description, wateringFrequence, waterLevel, imageUrl], (err, rows, fields) => {
         if (err) {
             res.status(500).send({message: err.sqlMessage})
         } else {
@@ -95,19 +95,19 @@ router.post("/postplant", multer.single('attachment'), imgUpload.uploadToGcs, (r
 // ---Ubah data tanaman---
 router.put("/updateplant/:id", multer.single('attachment'), imgUpload.uploadToGcs, (req, res) => {
     const id = req.params.id
-    const name = req.body.name
-    const scientificName = req.body.scientificName
+    const plantSpecies = req.body.plantSpecies
     const description = req.body.description
-    const wateringTime = req.body.wateringTime
+    const wateringFrequence = req.body.wateringFrequence
+    const waterLevel = req.body.waterLevel
     var imageUrl = ''
 
     if (req.file && req.file.cloudStoragePublicUrl) {
         imageUrl = req.file.cloudStoragePublicUrl
     }
 
-    const query = "UPDATE plant SET name = ?, scientificName = ?, description = ?, wateringTime = ?, attachment = ? WHERE id = ?"
+    const query = "UPDATE plant SET plantSpecies = ?, description = ?, wateringFrequence = ?, waterLevel = ?, attachment = ? WHERE id = ?"
     
-    connection.query(query, [name, scientificName, description, wateringTime, imageUrl, id], (err, rows, fields) => {
+    connection.query(query, [plantSpecies, description, wateringFrequence, waterLevel, imageUrl, id], (err, rows, fields) => {
         if (err) {
             res.status(500).send({message: err.sqlMessage})
         } else {
