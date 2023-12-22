@@ -39,7 +39,7 @@ app.post("/addplant", (req, res) => {
     try {
       await db.collection("plants").doc(`/${Date.now()}/`).create({
         id: Date.now(),
-        plantSpecies: req.body.plantSpecies,
+        plantFamily: req.body.plantFamily,
         description: req.body.description,
         wateringFrequence: req.body.wateringFrequence,
         waterLevel: req.body.waterLevel,
@@ -77,9 +77,9 @@ app.get("/plantDetail/:id", (req, res) => {
   });
 
   // Cari tanaman berdasarkan plantSpecies => get
-app.get("/plantBySpecies/:plantSpecies", async (req, res) => {
+app.get("/plantBySpecies/:plantFamily", async (req, res) => {
     try {
-      const querySnapshot = await db.collection("plants").where("plantSpecies", "==", req.params.plantSpecies).get();
+      const querySnapshot = await db.collection("plants").where("plantFamily", "==", req.params.plantFamily).get();
       const plants = [];
       
       querySnapshot.forEach((doc) => {
@@ -109,7 +109,7 @@ app.get("/plantBySpecies/:plantSpecies", async (req, res) => {
   
           docs.map((doc) => {
             const selectedData = {
-                plantSpecies: doc.data().plantSpecies,
+                plantFamily: doc.data().plantFamily,
                 description: doc.data().description,
                 wateringFrequence: doc.data().wateringFrequence,
                 waterLevel: doc.data().waterLevel,
@@ -138,7 +138,7 @@ app.get("/plantBySpecies/:plantSpecies", async (req, res) => {
       try {
         const reqDoc = db.collection("plants").doc(req.params.id);
         await reqDoc.update({
-            plantSpecies: req.body.plantSpecies,
+            plantFamily: req.body.plantFamily,
             description: req.body.description,
             wateringFrequence: req.body.wateringFrequence,
             waterLevel: req.body.waterLevel,
